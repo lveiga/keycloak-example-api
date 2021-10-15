@@ -28,7 +28,7 @@ app.use(
 //
 // Additional configuration is read from keycloak.json file
 // installed from the Keycloak web console.
-var keycloak = new Keycloak(
+const keycloak = new Keycloak(
   {
     store: memoryStore
   },
