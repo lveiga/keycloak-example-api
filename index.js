@@ -3,18 +3,19 @@ const session = require("express-session");
 const Keycloak = require("keycloak-connect");
 const cors = require("cors");
 const app = express();
+
 app.use(express.json());
-// Enable CORS support
 app.use(cors());
-// Create a session-store to be used by both the express-session
-// middleware and the keycloak middleware.
+
 const config = {
   realm: process.env.realm,
   realmPublicKey: process.env.realmPublicKey,
   authServerUrl: process.env.authServerUrl,
   clientId: process.env.clientId
 };
+
 const memoryStore = new session.MemoryStore();
+
 app.use(
   session({
     secret: "some secret",
@@ -23,11 +24,7 @@ app.use(
     store: memoryStore
   })
 );
-// Provide the session store to the Keycloak so that sessions
-// can be invalidated from the Keycloak console callback.
-//
-// Additional configuration is read from keycloak.json file
-// installed from the Keycloak web console.
+
 const keycloak = new Keycloak(
   {
     store: memoryStore
